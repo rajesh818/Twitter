@@ -1,11 +1,18 @@
-const express = require('express');
+const express = require("express");
+const { PrismaClient } = require("@prisma/client");
+const prisma = new PrismaClient();
+
 const app = express();
-const port = process.env.PORT || 3000;
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+async function main() {
+}
 
-app.listen(port, () => {
-    console.log(`Server is running on port ${port}`);
-});
+main()
+  .then(async () => {
+    await prisma.$disconnect();
+  })
+  .catch(async (e) => {
+    console.error(e);
+    await prisma.$disconnect();
+    process.exit(1);
+  });

@@ -1,0 +1,7 @@
+docker run -d \
+  --name postgres-db \
+  -p 5432:5432 \
+  -e POSTGRES_USER=rajesh818 \
+  -e POSTGRES_PASSWORD=Reddy@123 \
+  -v dbdata:/var/lib/postgresql/data \
+  postgres:latest
