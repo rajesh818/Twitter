@@ -1,7 +1,3 @@
-docker run -d \
-  --name postgres-db \
-  -p 5432:5432 \
-  -e POSTGRES_USER=rajesh818 \
-  -e POSTGRES_PASSWORD=Reddy@123 \
-  -v dbdata:/var/lib/postgresql/data \
-  postgres:latest
+docker volume create pgdata
+
+docker run -d --name twitter-db -p 5432:5432 -e POSTGRES_USER=rajesh818 -e POSTGRES_PASSWORD=Reddy@123 -v pgdata:/var/lib/postgresql/data postgres:latest
