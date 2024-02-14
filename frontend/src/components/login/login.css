@@ -1,0 +1,28 @@
+.login-page{
+    margin: 200px 500px;
+    padding: 50px 50px;
+    border: 1px solid black;
+    border-radius: 10px;
+
+    .login-component{
+        input {
+            margin-bottom: 10px;
+            border: 2px solid black;
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        button {
+            width: 100%;
+            border-radius: 10px;
+            padding: 10px 20px;
+            color: white;
+        }
+        .login-button {
+            background-color: blue;
+        }
+        .signup-button {
+            background-color: red;
+        }
+    }
+}
