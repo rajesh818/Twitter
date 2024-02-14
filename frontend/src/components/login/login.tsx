@@ -1,16 +1,12 @@
 import React, { ChangeEvent, useState } from "react";
+import {SignupForm} from '../../interfaces/user';
+import { SignupAPI, LoginAPI } from "../../API/auth";
 import "./login.css";
 
 interface Props {
   setLogin: (b: boolean) => void;
 }
 
-interface SignupForm {
-  name: string;
-  username: string;
-  password: string;
-  email: string;
-}
 const intialSignupForm: SignupForm = {
   name: "",
   username: "",
@@ -25,8 +21,13 @@ const Signup: React.FC<Props> = (props) => {
     setForm({ ...form, [name]: value });
   };
 
-  function generatedHiddenPassword() {
-    return "*".repeat(form.password.length);
+  // function generatedHiddenPassword() {
+  //   return "*".repeat(form.password.length);
+  // }
+
+  async function  registerUser()  {
+    const res = await SignupAPI(form);
+    console.log(res);
   }
   return (
     <div className="login-component">
@@ -56,11 +57,11 @@ const Signup: React.FC<Props> = (props) => {
           onChange={handleFormChange}
           type="text"
           name="password"
-          value={generatedHiddenPassword()}
+          value={form.password}
           placeholder="Password"
         />
       </div>
-      <button className="signup-button" onClick={() => props.setLogin(false)}>
+      <button className="signup-button" onClick={registerUser}>
         Sign up
       </button>
       <br />
@@ -82,8 +83,13 @@ const Login: React.FC<Props> = (props) => {
   const [username, setusername] = useState<string>("");
   const [password, setpassword] = useState<string>("");
 
-  function generatedHiddenPassword() {
-    return "*".repeat(password.length);
+  // function generatedHiddenPassword() {
+  //   return "*".repeat(password.length);
+  // }
+
+  const LoginUser = async () => {
+    const res = await LoginAPI(username, password);
+    console.log(res);
   }
   return (
     <div className="login-component">
@@ -101,11 +107,11 @@ const Login: React.FC<Props> = (props) => {
             setpassword(e.target.value);
           }}
           type="text"
-          value={generatedHiddenPassword()}
+          value={password}
           placeholder="password"
         />
       </div>
-      <button className="login-button">Log in</button>
+      <button onClick={LoginUser} className="login-button">Log in</button>
       <br />
       <br />
       <div>
