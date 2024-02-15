@@ -64,6 +64,27 @@ const UserService = {
     }
     return createJWTToken(user.id, user.email, user.username);
   },
+
+  checkToken : async function (token) {
+  try {
+    const decoded = jwt.verify(token, secretKey);
+    console.log(decoded);
+    let result = {isValidToken : true};
+    const userDetails = await prisma.user.findUnique({
+      where : {id: decoded.id},
+      select : {
+        email : true,
+        username: true,
+        name: true
+      }
+    })
+    result = {...result, ...userDetails};
+    return result;
+  } catch (error) {
+    console.log(error);
+    throw new ServiceError(error, ErrorStatusCodes.Bad_Request);
+  }
+  }
 };
 
 module.exports = UserService;

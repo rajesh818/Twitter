@@ -1,14 +1,19 @@
-import './App.css'
-import LoginComponent from './components/login/login';
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import TwitterRoutes from "./pages/twitter-routes";
+import LoginComponent from "./components/login/login";
 
-function App() {
-
+const App = () => {
   return (
-    <div>
-      <LoginComponent />
-    </div>
-  )
-}
+    <BrowserRouter basename="/app">
+      <Routes>
+        <Route path="/" element={<TwitterRoutes />}></Route>
+      </Routes>
+    </BrowserRouter>
+    //   <div>
+    //   <LoginComponent />
+    // </div>
+  );
+};
 
-export default App
-
+export default App;

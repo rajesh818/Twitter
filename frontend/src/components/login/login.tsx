@@ -3,7 +3,11 @@ import {SignupForm} from '../../interfaces/user';
 import { SignupAPI, LoginAPI } from "../../API/auth";
 import "./login.css";
 
-interface Props {
+interface handleAuthProps {
+  handleAuthentication: () => void;
+}
+
+interface Props extends handleAuthProps {
   setLogin: (b: boolean) => void;
 }
 
@@ -27,7 +31,9 @@ const Signup: React.FC<Props> = (props) => {
 
   async function  registerUser()  {
     const res = await SignupAPI(form);
-    console.log(res);
+    if(res && res.status === "SUCCESS") {
+      props.handleAuthentication();
+    }
   }
   return (
     <div className="login-component">
@@ -89,7 +95,10 @@ const Login: React.FC<Props> = (props) => {
 
   const LoginUser = async () => {
     const res = await LoginAPI(username, password);
-    console.log(res);
+    if(res && res.status === 'SUCCESS') {
+      localStorage.setItem('token', res.response.token);
+      props.handleAuthentication();
+    }
   }
   return (
     <div className="login-component">
@@ -127,11 +136,13 @@ const Login: React.FC<Props> = (props) => {
   );
 };
 
-const LoginComponent: React.FC = () => {
+
+
+const LoginComponent: React.FC<handleAuthProps> = ({handleAuthentication}) => {
   const [login, setLogin] = useState<boolean>(false);
   return (
     <div className="login-page bg-blue-50">
-      {login ? <Login setLogin={setLogin} /> : <Signup setLogin={setLogin} />}
+      {login ? <Login setLogin={setLogin} handleAuthentication={handleAuthentication} /> : <Signup handleAuthentication={handleAuthentication} setLogin={setLogin} />}
     </div>
   );
 };

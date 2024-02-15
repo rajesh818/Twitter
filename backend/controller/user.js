@@ -18,7 +18,16 @@ const UserController = {
         } catch(err) {
             next(err);
         }
-    }
+    },
+    checkToken : async (req ,res, next) => {
+        try {
+            const token = req.query.token;
+            let result = await UserService.checkToken(token);
+            res.status(200).json(result);
+        } catch(err) {
+            next(err);
+        }
+    },
 };
 
 module.exports = UserController;
